@@ -9,4 +9,5 @@ object Euler extends App {
   def Euler4(digits: Int = 3): Int = Utils.palindromes(digits).dequeue
   def Euler5(maxDivNum: Int = 20): Int = Utils.lcm((1 to maxDivNum).toList)
   def Euler6(maxNum: Int = 100): Long = Utils.squareOfSum(maxNum) - Utils.sumOfSquares(maxNum)
+  def Euler7(nthPrime: Int = 10001): Long = Utils.primes.take(nthPrime).last
 }

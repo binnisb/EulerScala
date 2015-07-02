@@ -8,10 +8,17 @@ object Utils {
 
   def sieve(s: Stream[Long]): Stream[Long] = s.head #:: sieve(s.tail.filter(_ % s.head != 0))
 
-  val primes = sieve(Stream.iterate(2L)({ i => i + {
-    if (i == 2) 1L else 2L
+  val primes = sieve(2L #:: Stream.iterate(3L)(_+2))
+
+  def nPrimes(nth: Int): List[Int] = {
+    val upperBound = if (nth > 6) (nth*math.log(nth) + nth*math.log(math.log(nth))).toInt+1 else 20
+    val maxIter = math.sqrt(upperBound).toInt
+    var sieve2 = Vector.fill[Boolean](upperBound)(true)
+    sieve2 = sieve2.updated(0,false).updated(1,false)
+    (2 to maxIter).map {i=>Stream.from(i).map(_+i).takeWhile(_<=sieve2.size).map({j=>sieve2=sieve2.updated(j,false)}) }
+
+    List[Int]()
   }
-                                        }))
 
   def factorize(num: Long): List[Long] = {
     @tailrec
