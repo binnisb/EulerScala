@@ -6,19 +6,24 @@ import scala.collection.mutable
  */
 object Utils {
 
-  def sieve(s: Stream[Long]): Stream[Long] = s.head #:: sieve(s.tail.filter(_ % s.head != 0))
+//  def sieve(s: Stream[Long]): Stream[Long] = s.head #:: sieve(s.tail.filter(_ % s.head != 0))
 
-  val primes = sieve(2L #:: Stream.iterate(3L)(_+2))
+//  val primes = sieve(2L #:: Stream.iterate(3L)(_+2))
 
-  def nPrimes(nth: Int): List[Int] = {
+  def atLeastNPrimes(nth: Int): Vector[Int] = {
     val upperBound = if (nth > 6) (nth*math.log(nth) + nth*math.log(math.log(nth))).toInt+1 else 20
     val maxIter = math.sqrt(upperBound).toInt
-    var sieve2 = Vector.fill[Boolean](upperBound)(true)
-    sieve2 = sieve2.updated(0,false).updated(1,false)
-    (2 to maxIter).map {i=>Stream.from(i).map(_+i).takeWhile(_<=sieve2.size).map({j=>sieve2=sieve2.updated(j,false)}) }
-
-    List[Int]()
+    var sieve = Vector.fill[Boolean](upperBound)(true)
+    sieve = sieve.updated(0,false).updated(1,false)
+    (2 to maxIter)
+      .map {i=>Stream.from(i+i,i)
+                 .takeWhile(_<sieve.size)
+                 .toList
+                 .map {j=>sieve=sieve.updated(j,false)}
+      }
+    sieve.zipWithIndex.filter(_._1).map(_._2)
   }
+  def nthPrime(nth: Int) = atLeastNPrimes(nth)(nth-1)
 
   def factorize(num: Long): List[Long] = {
     @tailrec
@@ -50,10 +55,11 @@ object Utils {
     (low to high).foreach { i =>
       (i to high).foreach { j =>
         if (isPalindrome(i * j)) pd += i * j
-                          }
-                          }
+      }
+    }
     pd
   }
+  def largestPalindrome(num: Int): Int = palindromes(num).dequeue()
 
   def lcm(nums: List[Int]): Int = {
     nums
@@ -62,7 +68,7 @@ object Utils {
       .reduce { (m1, m2) => (m1.keySet ++ m2.keySet)
         .map { k => (k, Vector(m1.getOrElse(k, 0), m2.getOrElse(k, 0)).max) }.toMap }
       .map(t => math.pow(t._1, t._2).toInt)
-      .reduce(_ * _)
+      .product
   }
 
   val sqrs: Stream[Long] = 1L #:: 4L #:: sqrs.zip(sqrs.tail).map {t=> t._2 + (t._2 - t._1 + 2)}
@@ -73,7 +79,6 @@ object Utils {
   def squareOfSum(num: Int) : Long = {
     val s = (((1+num)*num)/2).toLong
     s*s
-
   }
 }
 

@@ -2,11 +2,8 @@
  * Created by brynjar on 01/07/15.
  */
 class UtilsTest extends org.scalatest.FunSuite {
-  test("Fifth sieve prime is 11") {
-    assert(Utils.sieve(Stream.iterate(2L)(_+1L)).take(5).toList.last === 11)
-  }
   test("Sixth prime is 13") {
-    assert(Utils.primes.take(6).toList.last === 13)
+    assert(Utils.nthPrime(6) === 13)
   }
   test("Prime factors of 10 and 11"){
     assert(Utils.factorize(10).last === 5)
@@ -35,4 +32,13 @@ class UtilsTest extends org.scalatest.FunSuite {
   {
     assert(Utils.squareOfSum(4) === 100)
   }
+  test("atLestNPrimes")
+  {
+    assert(Utils.atLeastNPrimes(10).last === 31)
+  }
+  test("nthPrime")
+  {
+    assert(Utils.nthPrime(10) === 29)
+  }
+
 }
