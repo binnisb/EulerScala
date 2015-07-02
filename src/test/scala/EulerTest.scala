@@ -17,4 +17,7 @@ class EulerTest extends FunSuite {
   {
     assert(Euler.Euler4(2) === 9009)
   }
+  test("Euler5") {
+    assert(Euler.Euler5(10) === 2520)
+  }
 }
