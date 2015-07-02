@@ -57,5 +57,16 @@ object Utils {
       .map(t => math.pow(t._1, t._2).toInt)
       .reduce(_ * _)
   }
+
+  val sqrs: Stream[Long] = 1L #:: 4L #:: sqrs.zip(sqrs.tail).map {t=> t._2 + (t._2 - t._1 + 2)}
+
+  def sumOfSquares(num: Int) : Long = {
+    sqrs.take(num).sum
+  }
+  def squareOfSum(num: Int) : Long = {
+    val s = (((1+num)*num)/2).toLong
+    s*s
+
+  }
 }
 

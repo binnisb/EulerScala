@@ -19,4 +19,20 @@ class UtilsTest extends org.scalatest.FunSuite {
   {
     assert(Utils.palindromes(2).dequeue === 9009)
   }
+  test("Least common multiply")
+  {
+    assert(Utils.lcm(List(2,4,9,12)) === 36)
+  }
+  test("Square numbers")
+  {
+    assert(Utils.sqrs.take(4).toList === List[Long](1,4,9,16))
+  }
+  test("SumOfSquares")
+  {
+    assert(Utils.sumOfSquares(4) === 30)
+  }
+  test("SquareOfSum")
+  {
+    assert(Utils.squareOfSum(4) === 100)
+  }
 }
