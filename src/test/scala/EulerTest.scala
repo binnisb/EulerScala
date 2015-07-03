@@ -26,4 +26,10 @@ class EulerTest extends FunSuite {
   test("Euler7") {
     assert(Euler.Euler7(6) === 13)
   }
+  test("Euler8") {
+    assert(Euler.Euler8(4,Utils.readFile("src/main/resources/Euler8.txt")) === 5832)
+  }
+  test("Euler9") {
+    assert(Euler.Euler9(12) === 3*4*5)
+  }
 }

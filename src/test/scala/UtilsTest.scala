@@ -40,5 +40,11 @@ class UtilsTest extends org.scalatest.FunSuite {
   {
     assert(Utils.nthPrime(10) === 29)
   }
-
+  test("testReadFile")
+  {
+    assert(Utils.readFile("src/test/resources/test.txt") === "126041981898189799870894")
+  }
+  test(""){
+    assert(Utils.findLargestMultiply(3,Utils.readFile("src/test/resources/test.txt")) === 9*9*8)
+  }
 }

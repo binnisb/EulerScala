@@ -80,5 +80,29 @@ object Utils {
     val s = (((1+num)*num)/2).toLong
     s*s
   }
+
+  def findLargestMultiply(nrAdj: Int, nums: String) : Long = {
+    nums.sliding(nrAdj).map(_.split("").map(_.toLong).product).max
+  }
+  def readFile(path: String): String = {
+    io.Source.fromFile(path).getLines.mkString
+  }
+
+  def pythagoreanTripletMul(tripSum: Int): Long = {
+    Utils.sqrs.take(tripSum).combinations(3)
+    val v = Vector(0L) ++ Utils.sqrs.take(tripSum-3).toVector
+
+    @tailrec
+    def numsSum(i:Int, j:Int, k:Int,prods: List[(Int,Int,Int)]=List[(Int,Int,Int)](),sqrs: Vector[Long] = v): List[(Int,Int,Int)] = {
+      (i,j,k) match  {
+        case (i,j,_) if (i >= k)   => prods
+        case (i,j,k) if (j >= k)   => numsSum(i+1,i+2,j+k-i-3,prods)
+        case (i,j,k)               => numsSum(i,j+1,k-1, if (v(i)+v(j) == v(k)) prods :+ (i,j,k) else prods)
+      }
+    }
+    println(numsSum(1,2,tripSum-3).map(t=>t._1.toLong*t._2.toLong*t._3.toLong).max)
+
+    1L
+  }
 }
 
