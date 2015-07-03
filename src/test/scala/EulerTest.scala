@@ -32,4 +32,7 @@ class EulerTest extends FunSuite {
   test("Euler9") {
     assert(Euler.Euler9(12) === 3*4*5)
   }
+  test("Euler10") {
+    assert(Euler.Euler10(10) === 17)
+  }
 }

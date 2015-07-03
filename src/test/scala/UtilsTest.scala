@@ -44,7 +44,13 @@ class UtilsTest extends org.scalatest.FunSuite {
   {
     assert(Utils.readFile("src/test/resources/test.txt") === "126041981898189799870894")
   }
-  test(""){
+  test("Largest consecutive multiply"){
     assert(Utils.findLargestMultiply(3,Utils.readFile("src/test/resources/test.txt")) === 9*9*8)
+  }
+  test("pythagorean triplets"){
+    assert(Utils.pythagoreanTripletMul(12) === 3*4*5)
+  }
+  test("primesUnder"){
+    assert(Utils.primesUnder(10) === Vector(2,3,5,7))
   }
 }

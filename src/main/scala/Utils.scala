@@ -24,6 +24,7 @@ object Utils {
     sieve.zipWithIndex.filter(_._1).map(_._2)
   }
   def nthPrime(nth: Int) = atLeastNPrimes(nth)(nth-1)
+  def primesUnder(num: Int) = atLeastNPrimes((num/(math.log(num)-1)).toInt).filter(_ <= num)
 
   def factorize(num: Long): List[Long] = {
     @tailrec
@@ -100,9 +101,7 @@ object Utils {
         case (i,j,k)               => numsSum(i,j+1,k-1, if (v(i)+v(j) == v(k)) prods :+ (i,j,k) else prods)
       }
     }
-    println(numsSum(1,2,tripSum-3).map(t=>t._1.toLong*t._2.toLong*t._3.toLong).max)
-
-    1L
+    numsSum(1,2,tripSum-3).map(t=>t._1.toLong*t._2.toLong*t._3.toLong).max
   }
 }
 

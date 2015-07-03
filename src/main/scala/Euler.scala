@@ -11,5 +11,6 @@ object Euler extends App {
   def Euler6(maxNum: Int = 100): Long = Utils.squareOfSum(maxNum) - Utils.sumOfSquares(maxNum)
   def Euler7(nthPrime: Int = 10001): Long = Utils.nthPrime(nthPrime)
   def Euler8(nrAdj: Int = 13, nums: String = Utils.readFile("src/main/resources/Euler8.txt")): Long = Utils.findLargestMultiply(nrAdj,nums)
-  def Euler9(tripSum: Int = 12): Long = Utils.pythagoreanTripletMul(tripSum)
+  def Euler9(tripSum: Int = 1000): Long = Utils.pythagoreanTripletMul(tripSum)
+  def Euler10(num: Int = 2000000): Long = Utils.primesUnder(num).foldLeft(0L)(_+_)
 }
