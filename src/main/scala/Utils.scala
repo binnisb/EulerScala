@@ -1,5 +1,6 @@
 import scala.annotation.tailrec
 import scala.collection.mutable
+import scala.collection.immutable
 
 /**
  * Created by brynjar on 01/07/15.
@@ -103,5 +104,115 @@ object Utils {
     }
     numsSum(1,2,tripSum-3).map(t=>t._1.toLong*t._2.toLong*t._3.toLong).max
   }
-}
+  def readGrid(path: String): Array[Array[Int]] = {
+    io.Source.fromFile(path).getLines.map(_.split(" ").map(_.toInt).toArray).toArray
+  }
+  def findLagresgtMulGrid(num: Int, grid: Array[Array[Int]]): Long = {
+    val rows = grid.length
+    val cols = grid(0).length
+    val r = (0 until num)
 
+    val na = Array.ofDim[Int](rows + (num - 1)*2,cols + (num - 1)*2)
+    for (i<-(0 until rows); j <- (0 until cols)) {
+      na((num-1)+i)((num-1)+j) = grid(i)(j)
+    }
+    //val values = na.flatten
+    {
+      for {i <- (0 until rows)
+          j <- (0 until cols)
+          m = List(
+            r.map {k=> na(num-1+i)(num-1+j+k)}.product,
+            r.map {k=> na(num-1+i)(num-1+j-k)}.product,
+            r.map {k=> na(num-1+i+k)(num-1+j)}.product,
+            r.map {k=> na(num-1+i-k)(num-1+j)}.product,
+            r.map {k=> na(num-1+i+k)(num-1+j-k)}.product,
+            r.map {k=> na(num-1+i+k)(num-1+j+k)}.product).max
+      } yield m
+    }.max
+  }
+
+  def triangleNumFactors(numFactorsGreaterThan: Int): Long = {
+    var num = 1
+    var next = 2
+    var numFacs = 1
+    while (numFacs <= numFactorsGreaterThan){
+      num += next
+      next += 1
+      numFacs=2
+      for (i<-(2 to math.sqrt(num).toInt)) {
+        if (num%i==0) {
+          numFacs+=2
+        }
+      }
+    }
+    num
+  }
+  def readBig(path: String): Vector[BigInt]= {
+    io.Source.fromFile(path).getLines.map {i=>BigInt(i)}.toVector
+  }
+  def sumBig(bigs: Vector[BigInt]): BigInt = {
+    bigs.sum
+  }
+  def chainLength(underNum: Int): (Long,Long) = {
+    val chains = mutable.HashMap[Long,Long]((1L,1L),(2L,2L))
+    def calcChain(num: Long, chain: Vector[Long] = Vector[Long]()): Vector[Long] = {
+      (num,chains.contains(num)) match {
+        case (_,true)                => num +: chain
+        case (_,false) if num%2 == 0 => calcChain((num/2),num +: chain)
+        case (_,false) if num%2 == 1 => calcChain((3*num)+1,num +: chain)
+      }
+    }
+    for (i<- (3 to underNum)) {
+      val c = calcChain(i)
+      c.zipWithIndex.map({case (v,i) => chains(v)=i+chains(c(0))})
+    }
+    chains.maxBy(_._2)
+  }
+
+  def oneWayRoutes(sqrs: Int): Long = {
+    val routes = mutable.HashMap[(Int,Int),Long](((0,0),0L),((0,1),1L),((1,1),2L))
+
+    @tailrec
+    def routeCounts(inds: (Int,Int),counts: List[(Int,Int,Long)]=List[(Int,Int,Long)]()): List[(Int,Int,Long)] = {
+      inds match {
+        case (0,j)             => routeCounts((1,j), (0,j,1L) +: counts)
+        case (i,j) if (i == j) => (i,j,counts.head._3*2) +: counts
+        case (i,j)             => routeCounts((i+1,j),(i,j,routes((i,j-1)) + counts.head._3 ) +: counts )
+
+      }
+    }
+    (2 to sqrs).map { i=>
+        val rc = routeCounts((0,i))
+        rc.map {t => routes((t._1,t._2)) = t._3
+      }
+    }
+    routes((sqrs,sqrs))
+  }
+  def sumDigits(num: Int, pow: Int): Int = {
+    var l = BigInt(1)
+    for (i<-(1 to pow)){
+      l = l* num
+    }
+    l.toString.map{_.asDigit}.sum
+  }
+  def countChars(toNum: Int): Int = {
+    val nums = immutable.Map[Int,Int]((0,4),(1,3),(2,3),(3,5),(4,4),(5,4),(6,3),(7,5),(8,5),(9,4),
+                                      (10,3),(11,6),(12,6),(13,8),(14,8),(15,7),(16,7),(17,9),(18,8),(19,8),
+                                      (20,6),(30,6),(40,6),(50,5),(60,5),(70,7),(80,6),(90,6),
+                                      (100,10),(200,10),(300,12),(400,11),(500,11),(600,10),(700,12),(800,12),(900,11),(1000,11))
+    val values = Stream.from(1).take(toNum).map {
+      t => t match {
+        case t if (t <= 20 ) => nums(t)
+        case t if (t < 100 && t % 10 == 0) => nums(t)
+        case t if (t < 100) => {println("t<100 > 20",t-t%10,t%10);nums(t-t%10)+nums(t%10)}
+        case t if (t == 1000) => nums(t)
+        case t if (t % 100 == 0) => nums(t)
+        case t if (t % 10 == 0) => nums(t - t%100) + nums(t%100) + 3
+        case t if (t % 100 < 20) => {println("t%100 < 20",t,t-t%100,t%100); nums(t - t%100) + nums(t%100) + 3}
+        case t => {println("last",t - t % 100,t%100 - t % 10,t % 10);nums(t - t % 100) + nums(t%100 - t % 10) + nums(t % 10) + 3}
+      }
+    }
+    (0+:values.toVector).zipWithIndex.map(println)
+    values.sum
+  }
+}

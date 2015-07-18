@@ -1,6 +1,7 @@
 /**
  * Created by brynjar on 01/07/15.
  */
+import scala.collection.mutable
 class UtilsTest extends org.scalatest.FunSuite {
   test("Sixth prime is 13") {
     assert(Utils.nthPrime(6) === 13)
@@ -52,5 +53,29 @@ class UtilsTest extends org.scalatest.FunSuite {
   }
   test("primesUnder"){
     assert(Utils.primesUnder(10) === Vector(2,3,5,7))
+  }
+  test("readGrid") {
+    assert(Utils.readGrid("src/test/resources/grid.txt").flatten.size === 4*4)
+  }
+  test("triangleFactors") {
+    assert(Utils.triangleNumFactors(5) === List(1L,2L,4L,7L,14L,28L).last)
+  }
+  test("readBig") {
+    assert(Utils.readBig("src/test/resources/bigInt.txt")(0) === BigInt("12312312311231231231123123123112312312311231231231"))
+  }
+  test("sumBig") {
+    assert(Utils.sumBig(Vector[BigInt](BigInt("123"),BigInt("123"))) == BigInt("246"))
+  }
+  test("chainLength") {
+    assert(Utils.chainLength(10) === (9,20))
+  }
+  test("oneWayRoutes") {
+    assert(Utils.oneWayRoutes(3) === 20)
+  }
+  test("sumDigits") {
+    assert(Utils.sumDigits(2,4) === 7)
+  }
+  test("countChars") {
+    assert(Utils.countChars(5) == 19)
   }
 }

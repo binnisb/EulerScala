@@ -35,4 +35,25 @@ class EulerTest extends FunSuite {
   test("Euler10") {
     assert(Euler.Euler10(10) === 17)
   }
+  test("Euler11") {
+    assert(Euler.Euler11(2,Utils.readGrid("src/test/resources/grid.txt")) === 97*99)
+  }
+  test("Euler12") {
+    assert(Euler.Euler12(5) === 28)
+  }
+  test("Euler13") {
+    assert(Euler.Euler13(10,Utils.readBig("src/test/resources/bigInt.txt")).toString().slice(0,10) === "1231231231")
+  }
+  test("Euler14") {
+    assert(Euler.Euler14(10) === 9)
+  }
+  test("Euler15") {
+    assert(Euler.Euler15(3) === 20)
+  }
+  test("Euler16") {
+    assert(Euler.Euler16(2,5) === 5)
+  }
+  test("Euler17") {
+    assert(Euler.Euler17(5) === 19)
+  }
 }
