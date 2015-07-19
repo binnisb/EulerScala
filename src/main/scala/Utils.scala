@@ -200,19 +200,17 @@ object Utils {
                                       (10,3),(11,6),(12,6),(13,8),(14,8),(15,7),(16,7),(17,9),(18,8),(19,8),
                                       (20,6),(30,6),(40,6),(50,5),(60,5),(70,7),(80,6),(90,6),
                                       (100,10),(200,10),(300,12),(400,11),(500,11),(600,10),(700,12),(800,12),(900,11),(1000,11))
-    val values = Stream.from(1).take(toNum).map {
+    Stream.from(1).take(toNum).map {
       t => t match {
         case t if (t <= 20 ) => nums(t)
         case t if (t < 100 && t % 10 == 0) => nums(t)
-        case t if (t < 100) => {println("t<100 > 20",t-t%10,t%10);nums(t-t%10)+nums(t%10)}
+        case t if (t < 100) => nums(t-t%10)+nums(t%10)
         case t if (t == 1000) => nums(t)
         case t if (t % 100 == 0) => nums(t)
         case t if (t % 10 == 0) => nums(t - t%100) + nums(t%100) + 3
-        case t if (t % 100 < 20) => {println("t%100 < 20",t,t-t%100,t%100); nums(t - t%100) + nums(t%100) + 3}
-        case t => {println("last",t - t % 100,t%100 - t % 10,t % 10);nums(t - t % 100) + nums(t%100 - t % 10) + nums(t % 10) + 3}
+        case t if (t % 100 < 20) => nums(t - t%100) + nums(t%100) + 3
+        case t => nums(t - t % 100) + nums(t%100 - t % 10) + nums(t % 10) + 3
       }
-    }
-    (0+:values.toVector).zipWithIndex.map(println)
-    values.sum
+    }.sum
   }
 }
