@@ -78,4 +78,10 @@ class UtilsTest extends org.scalatest.FunSuite {
   test("countChars") {
     assert(Utils.countChars(5) == 19)
   }
+  test("readTriangle") {
+    assert(Utils.readTriangle("src/test/resources/triangle.txt") === Vector(Vector(3),Vector(7,4),Vector(2,4,6),Vector(8,5,9,3)) )
+  }
+  test("longestPath") {
+    assert(Utils.longestPath(Utils.readTriangle("src/test/resources/triangle.txt")) == 23)
+  }
 }

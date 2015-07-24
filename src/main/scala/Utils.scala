@@ -1,6 +1,5 @@
 import scala.annotation.tailrec
-import scala.collection.mutable
-import scala.collection.immutable
+import scala.collection.{mutable, immutable}
 
 /**
  * Created by brynjar on 01/07/15.
@@ -212,5 +211,20 @@ object Utils {
         case t => nums(t - t % 100) + nums(t%100 - t % 10) + nums(t % 10) + 3
       }
     }.sum
+  }
+
+  def longestPath(triangle: Vector[Vector[Int]]): Long = {
+    val hm = mutable.HashMap[(Int,Int),Long]()
+    (0 until triangle.length).map {i=>hm((triangle.length-1,i)) = triangle(triangle.length-1)(i)}
+
+    for (i <- (triangle.length-2 to 0 by -1);
+         j <- (0 to i)) {
+      hm.update((i,j),Vector(hm(i+1,j),hm(i+1,j+1)).max + triangle(i)(j))
+    }
+    hm((0,0))
+  }
+
+  def readTriangle(path: String): Vector[Vector[Int]] = {
+    io.Source.fromFile(path).getLines.map(_.split(" ").map(_.toInt).toVector).toVector
   }
 }

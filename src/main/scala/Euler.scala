@@ -36,4 +36,8 @@ object Euler extends App {
   def Euler16(dig: Int = 2, pow: Int=1000) = Utils.sumDigits(dig,pow)
 
   def Euler17(toNum: Int = 1000): Int = Utils.countChars(toNum)
+
+  def Euler18(triangle: Vector[Vector[Int]] = Utils.readTriangle("src/main/resources/Euler18.txt")): Long = Utils.longestPath(triangle)
+
+  def Euler67: Long = Euler.Euler18(Utils.readTriangle("src/main/resources/Euler67.txt"))
 }

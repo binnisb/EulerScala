@@ -56,4 +56,7 @@ class EulerTest extends FunSuite {
   test("Euler17") {
     assert(Euler.Euler17(5) === 19)
   }
+  test("Euler18") {
+    assert(Euler.Euler18(Utils.readTriangle("src/test/resources/triangle.txt")) === 23)
+  }
 }
