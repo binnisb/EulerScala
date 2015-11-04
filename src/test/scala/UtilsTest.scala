@@ -1,7 +1,9 @@
 /**
  * Created by brynjar on 01/07/15.
  */
-import scala.collection.mutable
+
+import java.time.{DayOfWeek, LocalDate}
+
 class UtilsTest extends org.scalatest.FunSuite {
   test("Sixth prime is 13") {
     assert(Utils.nthPrime(6) === 13)
@@ -82,6 +84,9 @@ class UtilsTest extends org.scalatest.FunSuite {
     assert(Utils.readTriangle("src/test/resources/triangle.txt") === Vector(Vector(3),Vector(7,4),Vector(2,4,6),Vector(8,5,9,3)) )
   }
   test("longestPath") {
-    assert(Utils.longestPath(Utils.readTriangle("src/test/resources/triangle.txt")) == 23)
+    assert(Utils.longestPath(Utils.readTriangle("src/test/resources/triangle.txt")) === 23)
+  }
+  test("countDays") {
+    assert(Utils.countMonthStartsWithDay(LocalDate.of(2015,10,1), LocalDate.of(2015,11,30), DayOfWeek.SUNDAY) === 1)
   }
 }

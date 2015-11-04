@@ -2,6 +2,8 @@
  * Created by brynjar on 01/07/15.
  */
 
+import java.time.{DayOfWeek, LocalDate}
+
 object Euler extends App {
   def Euler1(belowNum: Long = 1000): Long = Stream.iterate(1L)(_ + 1L) takeWhile { i => i < belowNum } filter { i => i % 3 == 0 || i % 5 == 0 } sum
 
@@ -40,4 +42,6 @@ object Euler extends App {
   def Euler18(triangle: Vector[Vector[Int]] = Utils.readTriangle("src/main/resources/Euler18.txt")): Long = Utils.longestPath(triangle)
 
   def Euler67: Long = Euler.Euler18(Utils.readTriangle("src/main/resources/Euler67.txt"))
+
+  def Euler19(start: LocalDate = LocalDate.of(1901,1,1), end: LocalDate = LocalDate.of(2000,12,31), countDay: DayOfWeek = DayOfWeek.SUNDAY) = Utils.countMonthStartsWithDay(start,end,countDay)
 }

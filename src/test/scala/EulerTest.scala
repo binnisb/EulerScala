@@ -1,3 +1,5 @@
+import java.time.{DayOfWeek, LocalDate}
+
 import org.scalatest.FunSuite
 
 /**
@@ -58,5 +60,8 @@ class EulerTest extends FunSuite {
   }
   test("Euler18") {
     assert(Euler.Euler18(Utils.readTriangle("src/test/resources/triangle.txt")) === 23)
+  }
+  test("Euler19") {
+    assert(Euler.Euler19(LocalDate.of(2015,10,1),LocalDate.of(2015,11,8),DayOfWeek.SUNDAY) === 1)
   }
 }

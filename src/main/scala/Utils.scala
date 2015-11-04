@@ -1,3 +1,5 @@
+import java.time.{DayOfWeek, LocalDate}
+
 import scala.annotation.tailrec
 import scala.collection.{mutable, immutable}
 
@@ -5,8 +7,12 @@ import scala.collection.{mutable, immutable}
  * Created by brynjar on 01/07/15.
  */
 object Utils {
+  def countMonthStartsWithDay(start: LocalDate, end: LocalDate, countDay: DayOfWeek): Int = {
+    Iterator.iterate(start)(_.plusMonths(1)).takeWhile(!_.isAfter(end)).filter(_.getDayOfWeek == countDay).length
+  }
 
-//  def sieve(s: Stream[Long]): Stream[Long] = s.head #:: sieve(s.tail.filter(_ % s.head != 0))
+
+  //  def sieve(s: Stream[Long]): Stream[Long] = s.head #:: sieve(s.tail.filter(_ % s.head != 0))
 
 //  val primes = sieve(2L #:: Stream.iterate(3L)(_+2))
 
